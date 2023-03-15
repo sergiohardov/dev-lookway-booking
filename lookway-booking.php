@@ -24,11 +24,11 @@ class LookwayBooking
 
     public function custom_post_type()
     {
-        register_post_type('booking', [
+        register_post_type('property', [
             'public' => true,
             'has_archive' => true,
-            'rewrite' => ['slug' => 'bookings'],
-            'label' => 'Booking',
+            'rewrite' => ['slug' => 'properties'],
+            'label' => 'Property',
             'supports' => ['title', 'editor', 'thumbnail']
         ]);
 
