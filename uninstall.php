@@ -1,7 +1,7 @@
 <?php
 
 $bookings = get_posts([
-    'post_type' => 'booking', 'numberposts' => -1
+    'post_type' => ['booking', 'agent'], 'numberposts' => -1
 ]);
 
 foreach ($bookings as $booking) {

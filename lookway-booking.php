@@ -31,6 +31,15 @@ class LookwayBooking
             'label' => 'Booking',
             'supports' => ['title', 'editor', 'thumbnail']
         ]);
+
+        register_post_type('agent', [
+            'public' => true,
+            'has_archive' => true,
+            'rewrite' => ['slug' => 'agents'],
+            'label' => 'Agents',
+            'supports' => ['title', 'editor', 'thumbnail'],
+            'show_in_rest' => true
+        ]);
     }
 
     static function activation()
