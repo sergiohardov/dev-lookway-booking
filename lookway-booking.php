@@ -9,3 +9,7 @@
  * License: GPLv2 or later
  * Text Domain: lookway-booking
  */
+
+if (!defined('ABSPATH')) {
+    die;
+}
