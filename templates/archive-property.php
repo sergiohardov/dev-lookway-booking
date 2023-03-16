@@ -1,68 +1,71 @@
 <?php get_header(); ?>
 
+<?php $lookwayBookingTemplateLoader->get_template_part('partials/filter'); ?>
+
 <div class="wrapper archive_property">
 
     <?php
-    if (have_posts()) {
 
-        // Load posts loop.
-        while (have_posts()) {
-            the_post(); ?>
+    if (!empty($_POST['submit'])) {
 
-            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <?php if (get_the_post_thumbnail(get_the_ID(), 'full')) {
-                    echo get_the_post_thumbnail(get_the_ID(), 'full');
-                } ?>
-                <h2><?php the_title(); ?></h2>
-                <div class="description"><?php the_excerpt(); ?></div>
-                <div class="property-info">
-                    <span class="location">
-                        <?php
-                        esc_html_e('Location:', 'lookway-booking');
-                        $locations = get_the_terms(get_the_ID(), 'location');
-                        foreach ($locations as $location) {
-                            echo ' ' . $location->name;
-                        }
-                        ?>
-                    </span>
-                    <span class="type">
-                        <?php
-                        esc_html_e('Type:', 'lookway-booking');
-                        $types = get_the_terms(get_the_ID(), 'property-type');
-                        foreach ($types as $type) {
-                            echo ' ' . $type->name;
-                        }
-                        ?>
+        $args = [
+            'post_type' => 'property',
+            'posts_per_page' => -1,
+            'meta_query' => ['relation' => 'AND'],
+            'tax_query' => ['relation' => 'AND'],
+        ];
 
-                    </span>
-                    <span class="price"><?php esc_html_e('Price:', 'lookway-booking');
-                                        echo ' ' . get_post_meta(get_the_ID(), 'lookway_booking_price', true); ?></span>
-                    <span class="offer"><?php esc_html_e('Offer:', 'lookway-booking');
-                                        echo ' ' . get_post_meta(get_the_ID(), 'lookway_booking_type', true); ?> </span>
-                    <span class="agent">
-                        <?php
-                        esc_html_e('Agent:', 'lookway-booking');
-                        $agent_id = get_post_meta(get_the_ID(), 'lookway_booking_agent', true);
-                        $agent = get_post($agent_id);
+        if (isset($_POST['lookway_booking_type']) && $_POST['lookway_booking_type'] != '') {
+            array_push($args['meta_query'], [
+                'key' => 'lookway_booking_type',
+                'value' => esc_attr($_POST['lookway_booking_type']),
+            ]);
+        }
 
-                        echo ' ' . esc_html($agent->post_title);
-                        ?>
-                    </span>
+        if (isset($_POST['lookway_booking_price']) && $_POST['lookway_booking_price'] != '') {
+            array_push($args['meta_query'], [
+                'key' => 'lookway_booking_price',
+                'value' => esc_attr($_POST['lookway_booking_price']),
+                'type' => 'numeric',
+                'compare' => '<='
+            ]);
+        }
 
-                </div>
-                <a href="<?php the_permalink(); ?>">Open This Property</a>
-            </article>
+        if (isset($_POST['lookway_booking_agent']) && $_POST['lookway_booking_agent'] != '') {
+            array_push($args['meta_query'], [
+                'key' => 'lookway_booking_agent',
+                'value' => esc_attr($_POST['lookway_booking_agent']),
+            ]);
+        }
 
-    <?php }
-        // pagination
-        posts_nav_link();
+        $properties = new WP_Query($args);
+
+        if ($properties->have_posts()) {
+
+            // Load posts loop.
+            while ($properties->have_posts()) {
+                $properties->the_post();
+                $lookwayBookingTemplateLoader->get_template_part('partials/content');
+            }
+        } else {
+            echo '<p>' . esc_html__('No Properties', 'lookway-booking') . '</p>';
+        }
     } else {
-        echo '<p>' . esc_html__('No Properties', 'lookway-booking') . '</p>';
+        if (have_posts()) {
+
+            // Load posts loop.
+            while (have_posts()) {
+                the_post();
+                $lookwayBookingTemplateLoader->get_template_part('partials/content');
+            }
+            // pagination
+            posts_nav_link();
+        } else {
+            echo '<p>' . esc_html__('No Properties', 'lookway-booking') . '</p>';
+        }
     }
+
     ?>
-
-
-
 </div>
 
 <?php get_footer(); ?>
