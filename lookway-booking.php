@@ -26,9 +26,23 @@ if (!class_exists('Gamajo_Template_Loader')) {
 
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-template-loader.php';
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-shortcodes.php';
+require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-filter-widget.php';
 
 class LookwayBooking
 {
+
+    function register()
+    {
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_front']);
+        add_action('plugins_loaded', [$this, 'load_text_domain']);
+        add_action('widgets_init', [$this, 'register_widget']);
+    }
+
+    public function register_widget()
+    {
+        register_widget('LookwayBookingFilterWidget');
+    }
 
     public function get_terms_hierarchical($tax_name, $current_term)
     {
@@ -58,13 +72,6 @@ class LookwayBooking
             }
         }
         return $html;
-    }
-
-    function register()
-    {
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_front']);
-        add_action('plugins_loaded', [$this, 'load_text_domain']);
     }
 
     function load_text_domain()
