@@ -23,9 +23,9 @@ if (!class_exists('LookwayBookingCpt')) {
 if (!class_exists('Gamajo_Template_Loader')) {
     require LOOKWAY_BOOKING_PATH . 'inc/class-gamajo-template-loader.php';
 }
-if (!class_exists('LookwayBookingTemplateLoader')) {
-}
+
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-template-loader.php';
+require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-shortcodes.php';
 
 class LookwayBooking
 {
@@ -34,12 +34,14 @@ class LookwayBooking
     {
         $taxonomy_terms = get_terms($tax_name, ['hide_empty' => false, 'parent' => 0]);
 
+        $html = '';
+
         if (!empty($taxonomy_terms)) {
             foreach ($taxonomy_terms as $term) {
                 if ($current_term == $term->term_id) {
-                    echo '<option value="' . $term->term_id . '"selected>' . $term->name . '</option>';
+                    $html .= '<option value="' . $term->term_id . '"selected>' . $term->name . '</option>';
                 } else {
-                    echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
+                    $html .= '<option value="' . $term->term_id . '">' . $term->name . '</option>';
                 }
 
                 $child_terms = get_terms($tax_name, ['hide_empty' => false, 'parent' => $term->term_id]);
@@ -47,14 +49,15 @@ class LookwayBooking
                 if (!empty($child_terms)) {
                     foreach ($child_terms as $child) {
                         if ($current_term == $child->term_id) {
-                            echo '<option value="' . $child->term_id . '"selected> - ' . $child->name . '</option>';
+                            $html .= '<option value="' . $child->term_id . '"selected> - ' . $child->name . '</option>';
                         } else {
-                            echo '<option value="' . $child->term_id . '"> - ' . $child->name . '</option>';
+                            $html .= '<option value="' . $child->term_id . '"> - ' . $child->name . '</option>';
                         }
                     }
                 }
             }
         }
+        return $html;
     }
 
     function register()
