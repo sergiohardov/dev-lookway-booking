@@ -21,6 +21,7 @@ final class ElementorLookwayBookingExtention
     public function __construct()
     {
         add_action('plugins_loaded', [$this, 'on_plugins_loaded']);
+        add_action('elementor/elements/categories_registered', [$this, 'add_elementor_widget_categories']);
     }
 
     public function i18n()
@@ -121,6 +122,17 @@ final class ElementorLookwayBookingExtention
         );
 
         printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', $message);
+    }
+
+    function add_elementor_widget_categories($elements_manager)
+    {
+        $elements_manager->add_category(
+            'lookway-booking',
+            [
+                'title' => esc_html('Lookway Booking'),
+                'icon' => 'fa fa-plug',
+            ]
+        );
     }
 }
 

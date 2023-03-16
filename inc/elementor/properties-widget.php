@@ -4,6 +4,7 @@ class ElementorLookwayBookingWidget extends \Elementor\Widget_Base
 {
 
     protected $lookwayBookingTemplateLoader;
+    protected $lookwayBookingLocations = ['' => 'Select Location'];
 
     public function get_name()
     {
@@ -22,7 +23,7 @@ class ElementorLookwayBookingWidget extends \Elementor\Widget_Base
 
     public function get_categories()
     {
-        return ['general'];
+        return ['lookway-booking'];
     }
 
     protected function register_controls()
@@ -45,6 +46,37 @@ class ElementorLookwayBookingWidget extends \Elementor\Widget_Base
             ]
         );
 
+        $temp_locations = get_terms('location');
+
+        foreach ($temp_locations as $location) {
+            $this->lookwayBookingLocations[$location->term_id] = $location->name;
+        }
+
+        $this->add_control(
+            'offer',
+            [
+                'label' => esc_html__('Offer', 'lookway-booking'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => '',
+                'options' => [
+                    '' => esc_html__('Select Offer', 'lookway-booking'),
+                    'sale' => esc_html__('For Sale', 'lookway-booking'),
+                    'rent' => esc_html__('For Rent', 'lookway-booking'),
+                    'sold'  => esc_html__('Sold', 'lookway-booking'),
+                ],
+            ]
+        );
+
+        $this->add_control(
+            'location',
+            [
+                'label' => esc_html__('Location', 'lookway-booking'),
+                'type' => \Elementor\Controls_Manager::SELECT,
+                'default' => '',
+                'options' => $this->lookwayBookingLocations,
+            ]
+        );
+
         $this->end_controls_section();
     }
 
@@ -54,10 +86,28 @@ class ElementorLookwayBookingWidget extends \Elementor\Widget_Base
 
         $settings = $this->get_settings_for_display();
 
-        $properties = new WP_Query([
+        $args = [
             'post_type' => 'property',
             'posts_per_page' => $settings['count'],
-        ]);
+            'meta_query' => ['relation' => 'AND'],
+            'tax_query' => ['relation' => 'AND'],
+        ];
+
+        if (isset($settings['offer']) && $settings['offer'] != '') {
+            array_push($args['meta_query'], [
+                'key' => 'lookway_booking_type',
+                'value' => esc_attr($settings['offer']),
+            ]);
+        }
+
+        if (isset($settings['location']) && $settings['location'] != '') {
+            array_push($args['tax_query'], [
+                'taxonomy' => 'location',
+                'terms' => esc_attr($settings['location']),
+            ]);
+        }
+
+        $properties = new WP_Query($args);
 
         $this->lookwayBookingTemplateLoader = new LookwayBookingTemplateLoader();
 
@@ -70,5 +120,6 @@ class ElementorLookwayBookingWidget extends \Elementor\Widget_Base
             }
             echo '</div>';
         }
+        wp_reset_postdata();
     }
 }
