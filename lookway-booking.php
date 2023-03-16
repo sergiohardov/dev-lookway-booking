@@ -8,6 +8,7 @@
  * Author URI: https://t.me/sergiohardov
  * License: GPLv2 or later
  * Text Domain: lookway-booking
+ * Domain Path: /lang
  */
 
 if (!defined('ABSPATH')) {
@@ -27,6 +28,12 @@ class LookwayBooking
     {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_front']);
+        add_action('plugins_loaded', [$this, 'load_text_domain']);
+    }
+
+    function load_text_domain()
+    {
+        load_plugin_textdomain('lookway-booking', false, dirname(plugin_basename(__FILE__)) . '/lang');
     }
 
     public function enqueue_admin()

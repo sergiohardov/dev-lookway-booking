@@ -78,22 +78,22 @@ if (!class_exists('LookwayBookingCpt')) {
 
             echo '
             <p>
-                <label for="lookway_booking_price">Price</label>
+                <label for="lookway_booking_price">' . esc_html__('Price', 'lookway-booking') . '</label>
                 <input type="number" id="lookway_booking_price" name="lookway_booking_price" value="' . esc_html($price) . '">
             </p>
 
             <p>
-                <label for="lookway_booking_period">Period</label>
+                <label for="lookway_booking_period">' . esc_html__('Period', 'lookway-booking') . '</label>
                 <input type="text" id="lookway_booking_period" name="lookway_booking_period" value="' . esc_html($period) . '">
             </p>
 
             <p>
-                <label for="lookway_booking_type">Type</label>
+                <label for="lookway_booking_type">' . esc_html__('Type', 'lookway-booking') . '</label>
                 <select id="lookway_booking_type" name="lookway_booking_type">
                     <option value="">Select Type</option>
-                    <option value="sale"' . selected('sale', $type, false) . '>For Sale</option>
-                    <option value="rent"' . selected('rent', $type, false) . '>For Rent</option>
-                    <option value="sold"' . selected('sold', $type, false) . '>Sold</option>
+                    <option value="sale"' . selected('sale', $type, false) . '>' . esc_html__('For Sale', 'lookway-booking') . '</option>
+                    <option value="rent"' . selected('rent', $type, false) . '>' . esc_html__('For Rent', 'lookway-booking') . '</option>
+                    <option value="sold"' . selected('sold', $type, false) . '>' . esc_html__('Sold', 'lookway-booking') . '</option>
                 </select>
             </p>
 
@@ -107,9 +107,9 @@ if (!class_exists('LookwayBookingCpt')) {
             if ($agents) {
                 echo '
                 <p>
-                <label for="lookway_booking_agent">Agent</label>
+                <label for="lookway_booking_agent">' . esc_html__('Agents', 'lookway-booking') . '</label>
                 <select id="lookway_booking_agent" name="lookway_booking_agent">
-                <option value="">Select Agent</option>
+                <option value="">' . esc_html__('Select Agent', 'lookway-booking') . '</option>
                 ';
 
 
@@ -129,7 +129,7 @@ if (!class_exists('LookwayBookingCpt')) {
                 'public' => true,
                 'has_archive' => true,
                 'rewrite' => ['slug' => 'properties'],
-                'label' => 'Property',
+                'label' => esc_html__('Property', 'lookway-booking'),
                 'supports' => ['title', 'editor', 'thumbnail']
             ]);
 
@@ -137,7 +137,7 @@ if (!class_exists('LookwayBookingCpt')) {
                 'public' => true,
                 'has_archive' => true,
                 'rewrite' => ['slug' => 'agents'],
-                'label' => 'Agents',
+                'label' => esc_html__('Agents', 'lookway-booking'),
                 'supports' => ['title', 'editor', 'thumbnail'],
                 'show_in_rest' => true
             ]);
