@@ -10,7 +10,7 @@
   justify-content: space-between;
 }
 
-.archive_property article.property,
+.archive_property article.type-property,
 .archive_agent article.agent {
   background: #fff;
   padding: 40px;
@@ -25,7 +25,7 @@ article.property .property-info span {
   display: block;
 }
 
-.single_property article.property {
+.single_property article.type-property {
   background: #fff;
   padding: 40px;
 }

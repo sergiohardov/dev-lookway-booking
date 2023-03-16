@@ -27,6 +27,7 @@ if (!class_exists('Gamajo_Template_Loader')) {
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-template-loader.php';
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-shortcodes.php';
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-filter-widget.php';
+require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-elementor.php';
 
 class LookwayBooking
 {
