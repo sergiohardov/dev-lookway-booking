@@ -18,8 +18,14 @@ if (!defined('ABSPATH')) {
 define('LOOKWAY_BOOKING_PATH', plugin_dir_path(__FILE__));
 
 if (!class_exists('LookwayBookingCpt')) {
-    require LOOKWAY_BOOKING_PATH . 'inc/cpt.php';
+    require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-cpt.php';
 }
+if (!class_exists('Gamajo_Template_Loader')) {
+    require LOOKWAY_BOOKING_PATH . 'inc/class-gamajo-template-loader.php';
+}
+if (!class_exists('LookwayBookingTemplateLoader')) {
+}
+require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-template-loader.php';
 
 class LookwayBooking
 {
