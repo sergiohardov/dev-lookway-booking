@@ -192,7 +192,7 @@ if (!class_exists('LookwayBookingCpt')) {
                 'labels' => $labels,
             ];
 
-            register_taxonomy('poperty-type', 'property', $args);
+            register_taxonomy('property-type', 'property', $args);
             unset($labels);
             unset($args);
         }
