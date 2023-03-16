@@ -38,6 +38,20 @@
             ]);
         }
 
+        if (isset($_POST['lookway_booking_location']) && $_POST['lookway_booking_location'] != '') {
+            array_push($args['tax_query'], [
+                'taxonomy' => 'location',
+                'terms' => esc_attr($_POST['lookway_booking_location']),
+            ]);
+        }
+
+        if (isset($_POST['lookway_booking_property-type']) && $_POST['lookway_booking_property-type'] != '') {
+            array_push($args['tax_query'], [
+                'taxonomy' => 'property-type',
+                'terms' => esc_attr($_POST['lookway_booking_property-type']),
+            ]);
+        }
+
         $properties = new WP_Query($args);
 
         if ($properties->have_posts()) {

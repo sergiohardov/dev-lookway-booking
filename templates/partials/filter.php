@@ -1,5 +1,18 @@
+<?php $lookwayBooking = new LookwayBooking(); ?>
+
 <div class="wrapper filter_form">
     <form method="post" action="<?php get_post_type_archive_link('property'); ?>">
+
+        <select name="lookway_booking_location">
+            <option value="">Select Location</option>
+            <?php $lookwayBooking->get_terms_hierarchical('location', $_POST['lookway_booking_location']); ?>
+        </select>
+
+        <select name="lookway_booking_property-type">
+            <option value="">Select Offer</option>
+            <?php $lookwayBooking->get_terms_hierarchical('property-type', $_POST['lookway_booking_property-type']); ?>
+        </select>
+
         <input type="text" placeholder="Max Price" name="lookway_booking_price" value="<?php if (isset($_POST['lookway_booking_price'])) {
                                                                                             echo esc_attr($_POST['lookway_booking_price']);
                                                                                         } ?>">

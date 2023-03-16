@@ -30,6 +30,33 @@ require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-template-loader.php';
 class LookwayBooking
 {
 
+    public function get_terms_hierarchical($tax_name, $current_term)
+    {
+        $taxonomy_terms = get_terms($tax_name, ['hide_empty' => false, 'parent' => 0]);
+
+        if (!empty($taxonomy_terms)) {
+            foreach ($taxonomy_terms as $term) {
+                if ($current_term == $term->term_id) {
+                    echo '<option value="' . $term->term_id . '"selected>' . $term->name . '</option>';
+                } else {
+                    echo '<option value="' . $term->term_id . '">' . $term->name . '</option>';
+                }
+
+                $child_terms = get_terms($tax_name, ['hide_empty' => false, 'parent' => $term->term_id]);
+
+                if (!empty($child_terms)) {
+                    foreach ($child_terms as $child) {
+                        if ($current_term == $child->term_id) {
+                            echo '<option value="' . $child->term_id . '"selected> - ' . $child->name . '</option>';
+                        } else {
+                            echo '<option value="' . $child->term_id . '"> - ' . $child->name . '</option>';
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     function register()
     {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
