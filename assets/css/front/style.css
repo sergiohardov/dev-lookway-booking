@@ -33,7 +33,9 @@ article.property .property-info span {
 #add_property p {
   margin-bottom: 20px;
 }
-
+#add_property label {
+  display: block;
+}
 #add_property input,
 #add_property textarea,
 #add_property select {
