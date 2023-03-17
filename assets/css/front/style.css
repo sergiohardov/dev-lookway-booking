@@ -29,3 +29,13 @@ article.property .property-info span {
   background: #fff;
   padding: 40px;
 }
+
+#add_property p {
+  margin-bottom: 20px;
+}
+
+#add_property input,
+#add_property textarea,
+#add_property select {
+  width: 50%;
+}

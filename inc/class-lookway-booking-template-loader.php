@@ -14,7 +14,7 @@ class LookwayBookingTemplateLoader extends Gamajo_Template_Loader
         add_filter('template_include', [$this, 'lookway_booking_templates']);
 
         $this->templates = [
-            'pages/template-custom.php' => 'Custom Template'
+            'tpl/template-addproperty.php' => 'Add Property'
         ];
 
         add_filter('theme_page_templates', [$this, 'custom_template']);
@@ -27,7 +27,7 @@ class LookwayBookingTemplateLoader extends Gamajo_Template_Loader
         $template_name = get_post_meta($post->ID, '_wp_page_template', true);
 
         if ($template_name && $this->templates[$template_name]) {
-            $file = LOOKWAY_BOOKING_PATH . 'pages/template-custom.php';
+            $file = LOOKWAY_BOOKING_PATH . $template_name;
 
             if (file_exists($file)) {
                 return $file;
