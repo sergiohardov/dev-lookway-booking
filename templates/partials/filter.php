@@ -1,7 +1,27 @@
 <?php $lookwayBooking = new LookwayBooking(); ?>
 
 <div class="wrapper filter_form">
+    <?php
+
+    $options = get_option('lookway_booking_settings_options');
+    $archive_title = '';
+    $filter_title = '';
+
+    if (isset($options['archive_title'])) {
+        $archive_title = $options['archive_title'];
+    }
+
+    if (isset($options['filter_title'])) {
+        $filter_title = $options['filter_title'];
+    }
+
+    ?>
+    
+    <h2><?php echo $archive_title; ?></h2>
+
     <form method="post" action="<?php get_post_type_archive_link('property'); ?>">
+
+        <h3><?php echo $filter_title; ?></h3>
 
         <select name="lookway_booking_location">
             <option value="">Select Location</option>

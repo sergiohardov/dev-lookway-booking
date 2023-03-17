@@ -41,6 +41,34 @@ class LookwayBooking
         add_action('admin_menu', [$this, 'add_menu_item']);
 
         add_filter('plugin_action_links_' . plugin_basename(__FILE__), [$this, 'add_plugin_setting_link']);
+
+        add_action('admin_init', [$this, 'settings_init']);
+    }
+
+    public function settings_init()
+    {
+        register_setting('lookway_booking_settings', 'lookway_booking_settings_options');
+        add_settings_section('lookway_booking_settings_section', 'Settings', [$this, 'lookway_booking_settings_section_html'], 'lookway_booking_settings_page');
+        add_settings_field('filter_title', 'Title for Filter', [$this, 'filter_title_html'], 'lookway_booking_settings_page', 'lookway_booking_settings_section');
+        add_settings_field('archive_title', 'Title for Archive Page', [$this, 'archive_title_html'], 'lookway_booking_settings_page', 'lookway_booking_settings_section');
+    }
+
+    public function lookway_booking_settings_section_html()
+    {
+        esc_html_e('Settings for Lookway Booking Plugin');
+    }
+
+    public function filter_title_html()
+    {
+        $options = get_option('lookway_booking_settings_options'); ?>
+        <input type="text" name="lookway_booking_settings_options[filter_title]" value="<?php echo isset($options['filter_title']) ? $options['filter_title'] : ''; ?>">
+<?php
+    }
+    public function archive_title_html()
+    {
+        $options = get_option('lookway_booking_settings_options'); ?>
+        <input type="text" name="lookway_booking_settings_options[archive_title]" value="<?php echo isset($options['archive_title']) ? $options['archive_title'] : ''; ?>">
+<?php
     }
 
     public function add_menu_item()
@@ -49,7 +77,7 @@ class LookwayBooking
             esc_html__('Lookway Booking Settings Page', 'lookway-booking'),
             'Lookway Booking',
             'manage_options',
-            'lookway_booking_settings',
+            'lookway_booking_settings_page',
             [$this, 'main_admin_page'],
             'dashicons-admin-plugins',
             100
