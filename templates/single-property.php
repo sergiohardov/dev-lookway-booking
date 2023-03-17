@@ -13,6 +13,9 @@
                 <?php if (get_the_post_thumbnail(get_the_ID(), 'full')) {
                     echo get_the_post_thumbnail(get_the_ID(), 'full');
                 } ?>
+
+                <?php echo do_shortcode('[lookway_booking_booking]'); ?>
+                
                 <h2><?php the_title(); ?></h2>
                 <div class="description"><?php the_content(); ?></div>
                 <div class="property-info">

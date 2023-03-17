@@ -28,6 +28,7 @@ require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-template-loader.php';
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-shortcodes.php';
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-filter-widget.php';
 require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-elementor.php';
+require LOOKWAY_BOOKING_PATH . 'inc/class-lookway-booking-bookingform.php';
 
 class LookwayBooking
 {
@@ -62,8 +63,9 @@ class LookwayBooking
     {
         $options = get_option('lookway_booking_settings_options'); ?>
         <input type="text" name="lookway_booking_settings_options[filter_title]" value="<?php echo isset($options['filter_title']) ? $options['filter_title'] : ''; ?>">
-<?php
+    <?php
     }
+
     public function archive_title_html()
     {
         $options = get_option('lookway_booking_settings_options'); ?>
