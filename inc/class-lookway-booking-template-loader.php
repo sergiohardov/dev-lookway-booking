@@ -6,7 +6,7 @@ class LookwayBookingTemplateLoader extends Gamajo_Template_Loader
     protected $theme_template_directory = 'lookway-booking';
     protected $plugin_directory = LOOKWAY_BOOKING_PATH;
     protected $plugin_template_directory = 'templates';
-    
+
     public $templates;
 
     public function register()
@@ -26,7 +26,7 @@ class LookwayBookingTemplateLoader extends Gamajo_Template_Loader
         global $post;
         $template_name = get_post_meta($post->ID, '_wp_page_template', true);
 
-        if ($this->templates[$template_name]) {
+        if ($template_name && $this->templates[$template_name]) {
             $file = LOOKWAY_BOOKING_PATH . 'pages/template-custom.php';
 
             if (file_exists($file)) {
