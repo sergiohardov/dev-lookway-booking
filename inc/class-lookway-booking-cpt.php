@@ -224,7 +224,11 @@ if (!class_exists('LookwayBookingCpt')) {
             $price = get_post_meta($post_id, 'lookway_booking_price', true);
             $offer = get_post_meta($post_id, 'lookway_booking_type', true);
             $agent_id = get_post_meta($post_id, 'lookway_booking_agent', true);
-            $agent = get_the_title($agent_id);
+            if ($agent_id) {
+                $agent = get_the_title($agent_id);
+            } else {
+                $agent = 'No Agent';
+            }
 
             switch ($column) {
                 case 'price':
